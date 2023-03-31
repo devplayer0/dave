@@ -53,6 +53,11 @@
           help = "build the system";
           command = "${pkgs.nix}/bin/nix build .#nixosConfigurations.${name}.config.system.build.toplevel";
         }
+        {
+          name = "deploy";
+          help = "deploy the system";
+          command = ''nixos-rebuild switch --flake .#${name} --use-remote-sudo --target-host "$@"'';
+        }
       ];
     };
   }));

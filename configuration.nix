@@ -1,9 +1,13 @@
 { config, lib, pkgs, ... }:
+let
+  inherit (lib) mkForce;
+in
 {
   system.stateVersion = "23.05";
 
   networking = {
     hostName = config.system.name;
+    useNetworkd = true;
   };
   time.timeZone = "Europe/Dublin";
   i18n.defaultLocale = "en_IE.UTF-8";
@@ -13,6 +17,8 @@
       trusted-users = [ "@wheel" ];
       experimental-features = [ "nix-command" "flakes" "ca-derivations" ];
     };
+    # Flake-y Nix, don't care about channels
+    nixPath = mkForce [ ];
   };
 
   services = {
@@ -20,7 +26,16 @@
   };
 
   programs = {
+    git.enable = true;
     fish.enable = true;
+    # needs channels to work >:(
+    command-not-found.enable = false;
+    tmux.enable = true;
+  };
+  environment = {
+    systemPackages = with pkgs; [
+      helix
+    ];
   };
 
   users = {
@@ -38,8 +53,7 @@
   };
 
   security = {
-    sudo.enable = false;
-    doas = {
+    sudo = {
       enable = true;
       wheelNeedsPassword = false;
     };
