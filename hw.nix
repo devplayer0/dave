@@ -1,0 +1,25 @@
+{ config, lib, pkgs, modulesPath, ... }:
+{
+  hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
+
+  boot = {
+    initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" "sd_mod" "sdhci_acpi" ];
+    kernelModules = [ "kvm-intel" ];
+    loader = {
+      grub.enable = false;
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/56cdaeed-4555-44f1-b180-e6fbe2e38d3d";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/826A-33B5";
+      fsType = "vfat";
+    };
+  };
+}
