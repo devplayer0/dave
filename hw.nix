@@ -2,6 +2,13 @@
 {
   hardware = {
     enableRedistributableFirmware = true;
+    firmware = with pkgs; [
+      # shitty broadcom firmware...
+      (runCommand "brcm-extra" {} ''
+        mkdir -p "$out"/lib/firmware
+        cp -r ${./misc/brcm} "$out"/lib/firmware/brcm
+      '')
+    ];
     cpu.intel.updateMicrocode = true;
   };
 
