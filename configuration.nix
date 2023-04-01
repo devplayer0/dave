@@ -31,10 +31,12 @@ in
     # needs channels to work >:(
     command-not-found.enable = false;
     tmux.enable = true;
+    htop.enable = true;
   };
   environment = {
     systemPackages = with pkgs; [
       helix
+      tcpdump
     ];
   };
 

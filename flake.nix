@@ -24,7 +24,7 @@
     nixosConfigurations."${name}" = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./hw.nix ./configuration.nix ./network.nix
+        ./hw.nix ./configuration.nix ./network.nix ./dave.nix
         {
           system = {
             inherit name;
