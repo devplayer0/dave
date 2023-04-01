@@ -1,0 +1,30 @@
+fps = 50;
+n = 3;
+w = Window.GetWidth();
+h = Window.GetHeight();
+
+debug_sprite = Sprite();
+fun debug(text) {
+  debug_sprite.SetImage(Image.Text(text, 0, 0, 0));
+  debug_sprite.SetPosition(0, 0, 1);
+}
+
+dave_images = [];
+for (i = 0; i < n; i++) {
+  dave_images[i] = Image("dave-" + i + ".png").Scale(w, h);
+}
+
+dave_sprite = Sprite();
+frame = 0;
+fun refresh_callback() {
+  time = frame / fps;
+
+  # loop over 1 seconds
+  t = (time % 1) / 1;
+  i = Math.Min(Math.Int(t * n), n - 1);
+  #debug("time: "+time+", t: "+t+", i: "+i);
+
+  dave_sprite.SetImage(dave_images[i]);
+  frame++;
+}
+Plymouth.SetRefreshFunction(refresh_callback);

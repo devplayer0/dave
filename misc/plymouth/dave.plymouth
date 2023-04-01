@@ -1,0 +1,9 @@
+[Plymouth Theme]
+Name=dave
+Description=dave the packet slave
+Comment=he moves the packets
+ModuleName=script
+
+[script]
+ImageDir=@out@/share/plymouth/themes/dave
+ScriptFile=@out@/share/plymouth/themes/dave/dave.script

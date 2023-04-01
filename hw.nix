@@ -1,6 +1,7 @@
 { config, lib, pkgs, modulesPath, ... }:
 {
   hardware = {
+    cpu.intel.updateMicrocode = true;
     enableRedistributableFirmware = true;
     firmware = with pkgs; [
       # shitty broadcom firmware...
@@ -9,7 +10,7 @@
         cp -r ${./misc/brcm} "$out"/lib/firmware/brcm
       '')
     ];
-    cpu.intel.updateMicrocode = true;
+    opengl.enable = true;
   };
 
   boot = {
@@ -17,7 +18,10 @@
     kernelModules = [ "kvm-intel" ];
     loader = {
       grub.enable = false;
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 10;
+      };
       efi.canTouchEfiVariables = true;
     };
   };
